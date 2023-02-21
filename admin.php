@@ -1,6 +1,6 @@
 <?php
 session_start();
-if (!isset($_SESSION['email'])){
+if (!isset($_SESSION['email']) && !isset($_COOKIE['email'])){
     header('Location:index.php');
 }
 ?>
@@ -16,8 +16,9 @@ if (!isset($_SESSION['email'])){
     <title>Document</title>
 </head>
 <body>
-<h3>Welcome To my admin Panal <span><?php echo $_SESSION['email'];?></span></h3>
-<p><?php echo $_SESSION['email'];?></p>
+<h3>Welcome To my admin Panal <span><?php echo isset($_SESSION['email']) ? $_SESSION['email'] : '';?></span></h3>
+<p><?php echo isset($_SESSION['email']) ? $_SESSION['email']: '';?></p>
+<?php echo isset($_COOKIE['email']) ? $_COOKIE['email']: '';?>
 <a href="logout.php">Logout</a>
 </body>
 </html>

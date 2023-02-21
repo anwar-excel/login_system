@@ -2,7 +2,7 @@
 <?php
 session_start();
 
-if (isset($_SESSION['email'])){
+if (isset($_SESSION['email']) || isset($_COOKIE['email'])){
     header('Location:admin.php');
 }
 if(isset($_POST['login'])){
@@ -11,10 +11,16 @@ if(isset($_POST['login'])){
 
     $email = $_POST['email'];
     $password = $_POST['password'];
+    $keep = isset($_POST['keep']) ? $_POST['keep']: NULL;
+
+    print_r($_POST);
 
     if( $email == EMAIL){
         if($password == PASSWORD){
             $_SESSION['email'] = $email;
+            if(isset($keep)){
+                setcookie('email',$email,time()+60*60);
+            }
             header("Location:admin.php");
         }
         else{
@@ -47,6 +53,7 @@ if(isset($_POST['login'])){
     <form action="" method="post">
         <input type="email" placeholder="Email Address" name="email" required>
         <input type="password" placeholder="Email Address" name="password" required>
+        <input type="checkbox" name="keep">
         <input type="submit" name="login" value="Login">
     </form>
 </div>
